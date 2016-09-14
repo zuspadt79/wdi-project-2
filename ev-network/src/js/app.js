@@ -7,8 +7,8 @@ googleMap.mapSetup = function(){
   let mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(51.515236,-0.072214),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    styles: [{"stylers":[{"saturation":-45},{"lightness":13}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#8fa7b3"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#667780"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#333333"}]},{"featureType":"road.highway","elementType":"labels.text.stroke","stylers":[{"color":"#8fa7b3"},{"gamma":2}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#a3becc"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#7a8f99"}]},{"featureType":"road.arterial","elementType":"labels.text.fill","stylers":[{"color":"#555555"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"#a3becc"}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#7a8f99"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#555555"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#bbd9e9"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#525f66"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"color":"#bbd9e9"},{"gamma":2}]},{"featureType":"transit.line","elementType":"geometry.fill","stylers":[{"color":"#a3aeb5"}]}]
   };
   this.map = new google.maps.Map(canvas, mapOptions);
   this.getChargers();
@@ -22,10 +22,19 @@ googleMap.loopThroughChargers = function(data){
   for (var i = 0; i < data.length; i++) {
   let myLatLng = {lat: data[i].AddressInfo.Latitude, lng: data[i].AddressInfo.Longitude};
 
-     let marker = new google.maps.Marker({
-       position: myLatLng,
-       map: this.map,
-     });
+    var icon = {
+      url: "/images/ohm-icon.png", // url
+      scaledSize: new google.maps.Size(25, 35), // scaled size
+      origin: new google.maps.Point(0,0), // origin
+      anchor: new google.maps.Point(0, 0) // anchor
+    };
+
+
+    let marker = new google.maps.Marker({
+      position: myLatLng,
+      map: this.map,
+      icon
+    });
   }
 };
 
@@ -54,14 +63,15 @@ $(googleMap.mapSetup.bind(googleMap));
 //  REGISTRATION AND LOGIN
 
 App.init = function(){
-  this.apiUrl = "http://localhost:3000/api";
-  this.$main  = $("main");
+  console.log(this);
 
-  $(".register").on("click", this.register.bind(this));
-  $(".login").on("click", this.login.bind(this));
+
+  this.apiUrl = "http://localhost:3000/api";
+  this.$modal  = $(".modal");
+
   $(".logout").on("click", this.logout.bind(this));
-  $(".usersIndex").on("click", this.usersIndex.bind(this));
-  this.$main.on("submit", "form", this.handleForm);
+  // $(".usersIndex").on("click", this.usersIndex.bind(this));
+  this.$modal.on("submit", "form", this.handleForm);
 
   if (this.getToken()) {
     this.loggedInState();
@@ -73,51 +83,12 @@ App.init = function(){
 App.loggedInState = function(){
   $(".loggedOut").hide();
   $(".loggedIn").show();
-  this.usersIndex();
+  // this.usersIndex();
 };
 
 App.loggedOutState = function(){
   $(".loggedOut").show();
   $(".loggedIn").hide();
-  this.register();
-};
-
-App.register = function() {
-  if (event) event.preventDefault();
-  this.$index.html(`
-    <h2>Register</h2>
-    <form method="post" action="/register">
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[username]" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="email" name="user[email]" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[password]" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
-      </div>
-      <input class="btn btn-primary" type="submit" value="Register">
-    </form>
-  `);
-};
-
-App.login = function() {
-  event.preventDefault();
-  this.$index.html(`
-    <h2>Login</h2>
-    <form method="post" action="/login">
-      <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="password" placeholder="Password">
-      </div>
-      <input class="btn btn-primary" type="submit" value="Login">
-    </form>
-  `);
 };
 
 App.logout = function() {
@@ -136,6 +107,7 @@ App.handleForm = function(){
 
   return App.ajaxRequest(url, method, data, (data) => {
     if (data.token) App.setToken(data.token);
+    $(this).parents(".modal").modal("hide");
     App.loggedInState();
   });
 };
