@@ -1,11 +1,12 @@
 @import "bower";
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import 'https://fonts.googleapis.com/css?family=Oxygen:300';
+
 
 $blue:      #0486E2;
 $white:     white;
 $black:     #222;
-$yellow:    #ffeb00;
-$base-font: 'Roboto', sans-serif;
+$yellow:    #ECC30B;
+$base-font: 'Oxygen', sans-serif;
 
 body {
   font-family: $base-font;
@@ -42,6 +43,10 @@ body {
     }
   }
 
+  .navbar-toggle {
+
+  }
+
   .navbar-nav > li > a {
     color: $white;
     &:hover, &:focus {
@@ -58,6 +63,11 @@ body {
     border-color: $yellow;
 
   }
+}
+
+#logIcon {
+  height:40px;
+  width: 28px;
 }
 
 #footer-nav {
@@ -108,6 +118,6 @@ body {
 
 #map-canvas {
   width: 100%;
-  height: 100vh;
+  height: 84vh;
   margin: 0 auto;
 }

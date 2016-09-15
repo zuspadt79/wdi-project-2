@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <title>Get Me Ohm!</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFqYY6Aqh-7d3cRrSi_NWd5Mo1ANIMh3Y" charset="utf-8"></script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/directions/json?origin=&destination=&key=AIzaSyDTR_XHfE_C0us3kuO6i_uXrHYmh-JDEsU" charset="utf-8"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFqYY6Aqh-7d3cRrSi_NWd5Mo1ANIMh3Y&libraries=places" charset="utf-8"></script>
   <script src="js/app.js" charset="utf-8"></script>
 </script>
 </head>
@@ -41,7 +42,7 @@
 
   <nav id="footer-nav" class="navbar navbar-default navbar-fixed-bottom">
     <div class="container">
-      <form class="form-inline">
+      <form class="form-inline calc-route">
         <div class="form-group">
           <label for="origin">Origin</label>
           <input type="text" class="form-control" id="origin" placeholder="Start">
@@ -49,7 +50,7 @@
 
         <div class="form-group">
           <label for="destination">Destination</label>
-          <input type="text" class="form-control" id="destination" placeholder="Destination">
+          <input type="text" class="form-control" id="destination" placeholder="End">
         </div>
 
         <button type="submit" class="btn btn-primary">Get Me Ohm</button>
@@ -63,7 +64,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h2 class="modal-title" id="myModalLabel">Login</h2>
+          <h2 class="modal-title" id="myModalLabel"><img class="evlogo-main" id="logIcon" src="./images/ohm-icon.png">Login</h2>
         </div>
         <form method="post" action="/login">
           <div class="modal-body">
@@ -90,7 +91,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h2 class="modal-title" id="myModalLabel">Register</h2>
+          <h2 class="modal-title" id="myModalLabel"><img class="evlogo-main" id="logIcon" src="./images/ohm-icon.png">Register</h2>
         </div>
         <form method="post" action="/register">
           <div class="modal-body">
