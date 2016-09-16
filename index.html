@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Get Me Ohm!</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFqYY6Aqh-7d3cRrSi_NWd5Mo1ANIMh3Y&libraries=places" charset="utf-8"></script>
+  <script src="js/app.js" charset="utf-8"></script>
+</script>
+</head>
+<body>
+  <header>
+    <nav id="header-nav" class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img class="evlogo-main" id="logo-main" src="./images/logo@2x-nav.png">Get Me Ohm</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <!-- Logged In Nav -->
+          <li class="loggedIn">
+            <a href="#" class="route">Route</a>
+          </li>
+          <li class="loggedIn">
+            <a href="#" class="chargerType">Charger Type</a>
+          </li>
+          <li class="loggedIn">
+            <a href="#" class="findMe">Find Me</a>
+          </li>
+          <li class="loggedIn">
+            <a href="#" class="logout">Logout</a>
+          </li>
+
+          <!-- Logged Out Nav -->
+          <li class="loggedOut"><a href="#" data-toggle="modal" data-target="#loginModal" >Login</a></li>
+          <li class="loggedOut"><a href="#" data-toggle="modal" data-target="#registerModal" >Register</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="exampleInputName2">Origin</label>
+      <input type="text" id="origin" class="form-control" placeholder="London, Manchester, Newcastle">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail2">Destination</label>
+      <input type="text" id="destination" class="form-control" placeholder="Ediburgh, Portsmouth, Hull">
+    </div>
+    <button type="submit" class="btn btn-success">Get Me Ohm</button>
+  </form>
+
+  <!-- <form class="radio">
+  <div class="radio-group">
+  <label for="exampleInputName2">Type 2</label>
+  <input type="radio" id="typetwo" class="radio-control" >
+</div>
+<div class="radio-group">
+<label for="exampleInputEmail2">CCS</label>
+<input type="radio" id="ccs" class="radio-control">
+</div>
+<div class="radio-group">
+<label for="exampleInputEmail2">CHAdeMO</label>
+<input type="radio" id="chademo" class="radio-control">
+</div>
+</form> -->
+
+</header>
+
+<div id="map-canvas"></div>
+
+<!-- login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel"><img class="evlogo-main" id="logIcon" src="./images/ohm-icon.png">Login</h2>
+      </div>
+      <form method="post" action="/login">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="login_email">Email address</label>
+            <input type="email" class="form-control" id="login_email" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="login_password">Password</label>
+            <input type="password" class="form-control" id="login_password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel"><img class="evlogo-main" id="logIcon" src="./images/ohm-icon.png">Register</h2>
+      </div>
+      <form method="post" action="/register">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="user_username">Username</label>
+            <input type="text" class="form-control" id="user_username" name="user[username]" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label for="user_email">Email address</label>
+            <input type="email" class="form-control" id="user_email" name="user[email]" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="user_password">Password</label>
+            <input type="password" class="form-control" id="user_password" name="user[password]" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="user_password">Password Confirmation</label>
+            <input type="password" class="form-control" id="user_password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
