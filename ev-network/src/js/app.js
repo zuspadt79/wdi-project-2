@@ -1,4 +1,3 @@
-
 const googleMap = googleMap || {};
 const App = App || {};
 
@@ -17,7 +16,7 @@ googleMap.mapSetup = function(){
   this.directionsDisplay.setMap(this.map);
 
   this.autocomplete();
-  // this.getChargers();
+  this.getChargers();
 };
 
 googleMap.autocomplete = function(){
@@ -37,7 +36,6 @@ googleMap.autocomplete = function(){
     this.destinationPlace = place.place_id;
   });
 };
-
 
 googleMap.calcRoute = function() {
   if(event) event.preventDefault();
@@ -62,7 +60,7 @@ googleMap.calcRoute = function() {
 };
 
 googleMap.getChargers = function(){
-  $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=GB&maxresults=500").done(this.loopThroughChargers.bind(this));
+  $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=GB&maxresults=3000").done(this.loopThroughChargers.bind(this));
 };
 
 googleMap.loopThroughChargers = function(data){
@@ -86,10 +84,12 @@ googleMap.loopThroughChargers = function(data){
 
 $(googleMap.mapSetup.bind(googleMap));
 
-
 // GEOLOCATION
 googleMap.currentLocation = function() {
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(function(position) {
+    googleMap.map.setZoom(15);
+
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
       map: googleMap.map,
@@ -100,8 +100,7 @@ googleMap.currentLocation = function() {
   });
 };
 
-
-//  REGISTRATION AND LOGIN
+// REGISTRATION AND LOGIN
 App.init = function(){
 
   this.apiUrl = "http://localhost:3000/api";
@@ -109,9 +108,10 @@ App.init = function(){
 
   $(".logout").on("click", this.logout.bind(this));
   $(".route").on("click", this.toggle);
+  // $(".chargerType").on("click", this.toggle);
   this.$modal.on("submit", "form", this.handleForm);
   $('.form-inline').on("submit", googleMap.calcRoute);
-  $('.findMe').on('click', this.currentLocation);
+  $('.findMe').on('click', googleMap.currentLocation);
 
   if (this.getToken()) {
     this.loggedInState();
@@ -122,6 +122,7 @@ App.init = function(){
 
 App.toggle = function() {
   $('.form-inline').slideToggle();
+  // $('.radio').slideToggle();
 };
 
 App.loggedInState = function(){
@@ -134,6 +135,7 @@ App.loggedOutState = function(){
   $(".loggedOut").show();
   $(".loggedIn").hide();
   $(".form-inline").hide();
+  // $(".radio").hide();
 };
 
 App.logout = function() {
