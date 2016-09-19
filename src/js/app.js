@@ -60,7 +60,7 @@ googleMap.calcRoute = function() {
 };
 
 googleMap.getChargers = function(){
-  $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=GB&maxresults=3000").done(this.loopThroughChargers.bind(this));
+  $.get("http://api.openchargemap.io/v2/poi/?output=json&countrycode=GB&maxresults=2500").done(this.loopThroughChargers.bind(this));
 };
 
 googleMap.loopThroughChargers = function(data){
